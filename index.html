@@ -1477,7 +1477,7 @@ body.morn #mini{opacity:0!important}
  <div class="card"><h2>7-day forecast</h2><div id="fDays"></div></div>
  <div class="fc-extra"><div class="card"><h2>❄️ Snow</h2><div id="fxSnow"></div></div><div class="card"><h2>🌅 Daylight</h2><div id="fxDay"></div></div></div>
 </section>
-<section id="pNews" class="page"><div class="pwrap"><div class="ptitle">Team news</div><div id="newsBody"><div class="gnone">Loading headlines…</div></div></div></section>
+<section id="pNews" class="page"><div class="pwrap"><div class="ptitle">News</div><div id="newsBody"><div class="gnone">Loading headlines…</div></div></div></section>
 <section id="pStand" class="page"><div class="pwrap"><div class="ptitle">Standings</div><div id="standBody"><div class="gnone">Loading standings…</div></div></div></section>
 <section id="pRadar" class="page"><div id="rdBody"></div></section>
 <section id="pSat" class="page"><div id="satBody"></div></section>
@@ -1542,7 +1542,7 @@ const CFG={
     {type:'local',     secs:40},
     {type:'maps',      secs:60},   // weather maps: rain radar loop, then the satellite loop (half the time each)
     {type:'cams',      secs:40},
-    {type:'news',      secs:40},   // team news: a featured story to read + more headlines
+    {type:'news',      secs:40},   // news: your teams + CBC London, a featured story to read + more headlines
     {type:'tx',        secs:35},   // trades & signings: Leafs and Jays first, last 30 days
     // sports (game day / live / World Series only show when they're on)
     {type:'recap',     secs:40},   // morning after a Leafs/Knights game, until noon
@@ -1657,7 +1657,7 @@ const CFG={
   xbox:{on:false, jumpSecs:0, mini:false},   // mini: the 'playing on Xbox' bar at the bottom of every page
   wazeMap:{on:true, reloadMin:15, views:[
     {name:'London', sub:'Live traffic · Waze reports', lat:42.9750, lon:-81.2500, z:12},
-    {name:'Southdale & Wharncliffe', lat:42.9405, lon:-81.2625, z:14, label:'bottom'},
+    {name:'Southdale · Wharncliffe to Wellington', lat:42.9440, lon:-81.2470, z:13, label:'bottom'},
     {name:'401 to Woodstock', lat:43.0300, lon:-81.0000, z:10}
   ]},
   // Live traffic map on the Around London page (TomTom, free key in the Worker as TOMTOM_KEY). Rests between quietFrom and quietTo o'clock to save the free allowance.
@@ -2290,6 +2290,9 @@ setInterval(()=>{alIdx++;drawAlert()},8000);
 const ago=d=>{const m=Math.round((Date.now()-d)/60000);return isNaN(m)?'':m<60?Math.max(1,m)+'m ago':m<1440?Math.round(m/60)+'h ago':d.toLocaleDateString([],{weekday:'short'})};
 const stripHTML=h=>{const d=document.createElement('div');d.innerHTML=String(h||'').replace(/<\/(p|div|li|h\d)>/gi,'\n').replace(/<br\s*\/?>/gi,'\n');return (d.textContent||'').replace(/ /g,' ').replace(/[ \t]+/g,' ').replace(/\n\s*\n+/g,'\n\n').trim()};
 let newsVisit=0;const newsBody={};
+/* a story's picture when the feed has no enclosure: media:content / media:thumbnail, or the first <img> in its HTML */
+function rssImg(it,q){const m=it.getElementsByTagName('media:content')[0]||it.getElementsByTagName('media:thumbnail')[0];if(m&&m.getAttribute('url'))return m.getAttribute('url');
+  const h=q('content:encoded')||q('description'),x=String(h).match(/<img[^>]+src=["']([^"']+)/i);return x?x[1].replace(/^http:/,'https:'):''}
 async function loadNews(){
   const N=CFG.news||{},items=[],maxAge=(N.days||5)*864e5;
   await Promise.all((N.teams||[]).map(async T=>{try{
@@ -2299,7 +2302,7 @@ async function loadNews(){
     else if(T.rss){const x=new DOMParser().parseFromString(await anyText(T.rss,t=>/<(rss|feed|channel)/i.test(t)),'text/xml');
       x.querySelectorAll('item').forEach(it=>{const q=n=>{const e=it.getElementsByTagName(n)[0];return e?e.textContent.trim():''};
         const body=stripHTML(q('content:encoded')||q('description')),enc=it.getElementsByTagName('enclosure')[0];
-        items.push({title:q('title'),sum:body.split('\n')[0].slice(0,220),body,img:enc?String(enc.getAttribute('url')||'').replace(/-\d+x\d+(\.\w+)$/,'$1'):'',src:T.src||T.name,tag:T.tag,T,date:new Date(q('pubDate')||Date.now())})})}
+        items.push({title:q('title'),sum:body.split('\n')[0].slice(0,220),body,img:enc?String(enc.getAttribute('url')||'').replace(/-\d+x\d+(\.\w+)$/,'$1'):rssImg(it,q),src:T.src||T.name,tag:T.tag,T,date:new Date(q('pubDate')||Date.now())})})}
   }catch(e){console.warn('news',T.name,e)}}));
   /* your team named in the headline counts most, then how recent it is */
   const fresh=items.filter(i=>Date.now()-i.date<maxAge),seen=new Set();
@@ -2313,14 +2316,14 @@ async function newsText(i){if(i.body)return i.body;if(!i.api)return i.sum;if(new
   try{const j=await (await tfetch(i.api,10000)).json(),t=stripHTML((((j.headlines||[])[0])||{}).story||'');if(t){newsBody[i.api]=t;return t}}catch(e){}return i.sum}
 async function renderNews(){
   const nb=$('newsBody');
-  if(!newsItems.length){nb.innerHTML='<div class="gnone">Team news unavailable right now</div>';return}
+  if(!newsItems.length){nb.innerHTML='<div class="gnone">News unavailable right now</div>';return}
   const pool=newsItems.slice(0,6),hero=pool[newsVisit%pool.length],rest=newsItems.filter(i=>i!==hero).slice(0,5);
   const tag=i=>`<span class="nt-tag t-${esc(i.tag.toLowerCase())}">${esc(i.tag)}</span>`;
   const txt=await newsText(hero),paras=txt.split(/\n+/).map(x=>x.trim()).filter(x=>x.length>30).slice(0,5);
   const html=`<div class="nt-hero"><div class="nt-img">${hero.img?`<img src="${esc(hero.img)}" alt="" onerror="this.remove()">`:''}</div>
       <div class="nt-cap">${tag(hero)}<b>${esc(hero.title)}</b><div class="nmeta">${esc(hero.src)} · ${ago(hero.date)}</div></div>
       <div class="nt-text">${(paras.length?paras:[hero.sum]).map(p=>`<p>${esc(p)}</p>`).join('')}</div></div>
-    ${rest.length?`<div class="card nt-list"><h2>More team news</h2>${rest.map(i=>`<div class="nt-row"><div class="nt-th">${i.img?`<img src="${esc(i.img)}" alt="" onerror="this.remove()">`:''}</div><div>${tag(i)}<b>${esc(i.title)}</b><small>${esc(i.sum||'')}</small></div><em>${ago(i.date)}</em></div>`).join('')}</div>`:''}`;
+    ${rest.length?`<div class="card nt-list"><h2>More news</h2>${rest.map(i=>`<div class="nt-row"><div class="nt-th">${i.img?`<img src="${esc(i.img)}" alt="" onerror="this.remove()">`:''}</div><div>${tag(i)}<b>${esc(i.title)}</b><small>${esc(i.sum||'')}</small></div><em>${ago(i.date)}</em></div>`).join('')}</div>`:''}`;
   if(nb.innerHTML!==html)nb.innerHTML=html;
   nb.style.cssText='display:flex;flex-direction:column;gap:calc(2.2*var(--u));flex:1;min-height:0;overflow:hidden';
   const over=()=>nb.scrollHeight>nb.clientHeight+2;[...nb.children].forEach(c=>c.style.flexShrink='0');
@@ -2830,7 +2833,7 @@ function handleCommand(raw){
   if(has(/\b(weather|forecast|temperature|outside|rain|raining|snow|snowing|cold|warm|hot|umbrella|jacket|degrees)\b/)){showFor('forecast');return reply(wxSay(has(/\btomorrow\b/)))}
   if(has(/\b(score|scores|game|games|playing|hockey|baseball|leafs|knights|jays)\b/)){if(liveOn()){showFor('live');return reply(liveSay())}showFor('dashboard');return reply(gameSay(team)||(team?nextSay(team):'None of your teams play today. '+nextSay('')))}
   if(has(/\b(what should we watch|movie night|watch next|something to watch|recommend\w*|new on jellyfin)\b/)){showFor('watch');const k=WT&&(WT.picks||[])[wtVisit%Math.max(1,(WT.picks||[]).length)];return reply(k?`How about ${k.title}${k.year?' from '+k.year:''}? ${k.why||''}.`:'Let me look through the library.')}
-  if(has(/\b(news|headlines|happening)\b/)){showFor('news');const t=newsItems.slice(0,3);return reply(t.length?'Team news: '+t.map(i=>i.title).join('. ')+'.':'I don\'t have any team news right now.')}
+  if(has(/\b(news|headlines|happening)\b/)){showFor('news');const t=newsItems.slice(0,3);return reply(t.length?'News: '+t.map(i=>i.title).join('. ')+'.':'I don\'t have any news right now.')}
   if(has(/\b(standings?|table|division|conference|rank|ranked|place)\b/)){showFor('standings');
     const pos=(rows,fav,lbl)=>{const i=rows.findIndex(r=>fav.includes(r.c));return i<0?'':`The ${rows[i].name||rows[i].c} are ${i+1}${['st','nd','rd'][i]||'th'} in the ${lbl} with ${rows[i].pts} points.`};
     const n=CFG.leagues.find(l=>l.league==='nhl'),o=CFG.leagues.find(l=>l.type==='hockeytech');
