@@ -706,7 +706,7 @@ body.chips2 #wxTm{display:none}body.chips2 #time{font-size:calc(14*var(--u))!imp
 .wr-u b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.wr-u>span:last-child{color:var(--dim);font-variant-numeric:tabular-nums}
 .wr-bar{height:calc(1.4*var(--u));border-radius:calc(1*var(--u));background:rgba(255,255,255,.1);overflow:hidden}.wr-bar i{display:block;height:100%;border-radius:calc(1*var(--u))}
 /* ===== Visual refresh: page accent colours, icons, glow and entrance animation ===== */
-#shift{--acc:#6ea8ff}#pLive{--acc:#ff5c6c}#pGameday.kn{--acc:#d4a017;--ico:'⚔️'}#pHomeCams{--acc:#7dd3fc;--ico:'🏠'}#pGames{--acc:#4d8bff;--ico:'🏒'}#pJelly{--acc:#b18cff;--ico:'🍿'}#pGameday{--acc:#4d8bff;--ico:'🍁'}
+#shift{--acc:#6ea8ff}#pLive{--acc:#ff5c6c}#pKgd{--acc:#d4a017;--ico:'⚔️'}#pHomeCams{--acc:#7dd3fc;--ico:'🏠'}#pGames{--acc:#4d8bff;--ico:'🏒'}#pJelly{--acc:#b18cff;--ico:'🍿'}#pGameday{--acc:#4d8bff;--ico:'🍁'}
 #pLocal{--acc:#2fd3c0;--ico:'🚗'}#pFc{--acc:#5db7ff;--ico:'⛅'}#pNews{--acc:#ff9f43;--ico:'📰'}#pStand{--acc:#5fd88a;--ico:'📊'}
 #pComing{--acc:#ffd84a;--ico:'📅'}#pHub{--acc:#4d8bff;--ico:'🏒'}#pWS{--acc:#ffd84a;--ico:'⚾'}#pWrap{--acc:#ff5c8a;--ico:'🎬'}#pPhotos{--acc:#ffb84d}
 .page::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
@@ -1529,6 +1529,7 @@ html.liquid[data-theme="glass"] #bg{opacity:.8}
 <div id="npMini"></div>
 <section id="pLive" class="page"><div id="lvBody"></div></section>
 <section id="pGameday" class="page"><div id="gdBody"></div></section>
+<section id="pKgd" class="page"><div id="kgdBody"></div></section>
 <section id="pLocal" class="page"><div id="locBody"></div></section>
 <section id="pJelly" class="page"><div id="jfBg"></div><div id="jfBody"></div></section>
 <section id="pComing" class="page"><div class="pwrap"><div class="ptitle">Coming up</div><div id="comingBody"></div></div></section>
@@ -1693,7 +1694,7 @@ const CFG={
   wazeMap:{on:true, reloadMin:15, views:[
     {name:'London → Hamilton', sub:'401 / 403 traffic · Waze reports', lat:43.2050, lon:-80.5600, z:9},
     {name:'London', lat:42.9900, lon:-81.2500, z:11},
-    {name:'401 to Woodstock', lat:43.0300, lon:-81.0000, z:10, label:'bottom'}
+    {name:'Southdale · Wharncliffe to Wellington', lat:42.9440, lon:-81.2470, z:13, label:'bottom'}
   ]},
   // Live traffic map on the Around London page (TomTom, free key in the Worker as TOMTOM_KEY). Rests between quietFrom and quietTo o'clock to save the free allowance.
   // views: [big map, small map, small map]
@@ -1724,7 +1725,7 @@ const CFG={
   // Around town page: nearest 511 traffic cameras, road events within roadKm, planes within planeKm of your lat/lon.
   // Around London page: cams = how many traffic cameras; road events shown only if within nearKm of town, on the 401/403 within hwyKm, or a full closure within closureKm
   // ★ drives: drive times from home (the Worker's HOME secret) to these places. hwys: highways that count as "yours" for road events and winter roads
-  local:{on:true, hwys:'401|402|4|73|2', drives:[{name:'Woodstock',lat:43.1306,lon:-80.7467},{name:'St. Thomas',lat:42.7784,lon:-81.1825},{name:'Kitchener',lat:43.4516,lon:-80.4925},{name:'Toronto',lat:43.6435,lon:-79.3791}], cams:3, maxEvents:2, roadKm:40, nearKm:12, hwyKm:25, closureKm:20},
+  local:{on:true, hwys:'401|402|4|73|2', drives:[{name:'Woodstock',lat:43.1306,lon:-80.7467},{name:'St. Thomas',lat:42.7784,lon:-81.1825},{name:'Hamilton',lat:43.2557,lon:-79.8711},{name:'Toronto',lat:43.6435,lon:-79.3791}], cams:3, maxEvents:2, roadKm:40, nearKm:12, hwyKm:25, closureKm:20},
   // Plane radar page: radiusKm = how far out it looks, cards = how many flights listed under the radar
   planes:{on:true, radiusKm:40, cards:4},
   // Drive times for calendar events with a location: bufferMin = extra minutes added to "leave by"
@@ -2214,7 +2215,7 @@ function renderGames(){
 setInterval(()=>{if($('pGames').classList.contains('on'))renderGames()},5000);
 
 /* ---------- Page rotation ---------- */
-const PAGE_EL={dashboard:'shift',photos:'pPhotos',games:'pGames',forecast:'pFc',news:'pNews',standings:'pStand',coming:'pComing',jellyfin:'pJelly',gameday:'pGameday',kgameday:'pGameday',homecams:'pHomeCams',local:'pLocal',live:'pLive',hub:'pHub',wrapped:'pWrap',ws:'pWS',recap:'pRecap',khub:'pKHub',week:'pWeek',sat:'pSat',rloop:'pRLoop',watch:'pWatch',tech:'pTech',morn:'pMorn',np:'pNP',tx:'pTx',xbox:'pXbox',maps:'pRLoop',aqua:'pAqua',car:'pCar',cams:'pCams',radar:'pRadar'};
+const PAGE_EL={dashboard:'shift',photos:'pPhotos',games:'pGames',forecast:'pFc',news:'pNews',standings:'pStand',coming:'pComing',jellyfin:'pJelly',gameday:'pGameday',kgameday:'pKgd',homecams:'pHomeCams',local:'pLocal',live:'pLive',hub:'pHub',wrapped:'pWrap',ws:'pWS',recap:'pRecap',khub:'pKHub',week:'pWeek',sat:'pSat',rloop:'pRLoop',watch:'pWatch',tech:'pTech',morn:'pMorn',np:'pNP',tx:'pTx',xbox:'pXbox',maps:'pRLoop',aqua:'pAqua',car:'pCar',cams:'pCams',radar:'pRadar'};
 let paused=false;
 let pIdx=-1,pTimer;
 const canShow=p=>!!PAGE_EL[p.type]&&!(['local','cams','photos'].includes(p.type)&&!(CFG.relay&&SECRETS.calkey))&&(p.type!=='tx'||(typeof txOn==='function'&&txOn()))&&(p.type!=='xbox'||(typeof xbOn==='function'&&xbOn()))&&(p.type!=='np'||(typeof npOn==='function'&&npOn()&&NPC().page!==false))&&(p.type!=='photos'||photosOn())&&(p.type!=='jellyfin'||jfOn())&&(p.type!=='gameday'||gdToday())&&(p.type!=='kgameday'||kgdToday())&&(p.type!=='homecams'||hcOK)&&(p.type!=='local'||locOn())&&(p.type!=='live'||liveOn())&&(p.type!=='hub'||hubOn())&&(p.type!=='ws'||wsShow())&&(p.type!=='recap'||recapOn())&&(p.type!=='khub'||khOn())&&(p.type!=='week'||weekOn())&&(p.type!=='radar'||rdOn())&&(p.type!=='sat'||(CFG.satellite&&CFG.satellite.on!==false))&&(p.type!=='rloop'||!(CFG.radarLoop&&CFG.radarLoop.on===false))&&(p.type!=='maps'||!(CFG.radarLoop&&CFG.radarLoop.on===false)||(CFG.satellite&&CFG.satellite.on!==false))&&(p.type!=='cams'||(CFG.cams&&CFG.cams.on!==false&&camsList().length>0))&&(p.type!=='watch'||wtOn())&&(p.type!=='tech'||tsOn())&&(p.type!=='wrapped'||(jfOn()&&!(CFG.wrapped&&CFG.wrapped.on===false)&&new Date().getDate()<=((CFG.wrapped&&CFG.wrapped.days)||7)));
@@ -2243,8 +2244,8 @@ function nextPage(force,hold){
   if(p.type==='standings'){stView=0;renderStandings();clearTimeout(window._stT);window._stT=setTimeout(()=>{if($('pStand').classList.contains('on')){stView=1;renderStandings()}},Math.max(4000,(p.secs||15)*500))}
   if(p.type==='coming')renderComing();
   if(p.type==='jellyfin'){renderJelly();loadJelly()}
-  if(p.type==='gameday'){window._gdK=false;$('pGameday').classList.remove('kn');renderGameday();loadGameday()}
-  if(p.type==='kgameday'){window._gdK=true;$('pGameday').classList.add('kn');gdSig='';renderGameday();loadKGD()}
+  if(p.type==='gameday'){window._gdK=false;renderGameday();loadGameday()}
+  if(p.type==='kgameday'){window._gdK=true;gdSig='';renderGameday();loadKGD()}
   if(p.type==='homecams')hcShow();else hcHide();
   if(p.type==='local'){renderLocal();loadLocal();if(Date.now()-drvAt>290000)loadDrives()}
   if(p.type==='live'){if(!force)lvPick++;renderLive2();loadLive()}
@@ -3068,7 +3069,7 @@ async function loadKGD(){const C=CFG.kgameday||{};if(C.on===false||!CFG.relay)re
 const kgdToday=()=>{if(!KGD||!KGD.game)return false;const s=new Date(KGD.game.start);return s.toDateString()===new Date().toDateString()&&Date.now()<s.getTime()+10*60000};
 setTimeout(loadKGD,14000);setInterval(loadKGD,10*60000);
 function renderGameday(){
-  const b=$('gdBody');
+  const b=$(window._gdK?'kgdBody':'gdBody');
   if(!GDX()||!GDX().game){b.innerHTML='<div class="jf-wait">No game scheduled</div>';gdSig='';return}
   const g=GDX().game,U=GDX().us||{},T=GDX().them||{},us=nick(g.us.name),them=nick(g.them.name);
   const st=new Date(g.start);
@@ -3102,12 +3103,12 @@ function renderGameday(){
   gdTick();
 }
 /* too tall? drop the 2nd scorer, then the streak row, then the 2nd goalie (each team) */
-function fitGameday(){const b=document.querySelector('#gdBody .gd-body');if(!b)return;const over=()=>b.scrollHeight>b.clientHeight+2;
+function fitGameday(){const b=document.querySelector((window._gdK?'#kgdBody':'#gdBody')+' .gd-body');if(!b)return;const over=()=>b.scrollHeight>b.clientHeight+2;
   const drop=sel=>{const cards=b.querySelectorAll('.gd-two .gd-card');let did=false;cards.forEach(c=>{const x=c.querySelectorAll(sel);if(x.length>1){x[x.length-1].remove();did=true}});return did};
   if(over())drop('.gd-sc');if(over()){const r=b.querySelector('.gd-streak');if(r)r.remove()}if(over())drop('.gd-gk');}
-function gdTick(){const el=$('gdCd');if(!el||!GDX()||!GDX().game)return;const ms=new Date(GDX().game.start)-Date.now();
+function gdTick(){const el=document.querySelector((window._gdK?'#kgdBody':'#gdBody')+' #gdCd');if(!el||!GDX()||!GDX().game)return;const ms=new Date(GDX().game.start)-Date.now();
   if(ms<=0){el.textContent='Puck drop!';return}const s=Math.floor(ms/1000);el.textContent=Math.floor(s/3600)+':'+jfPad(Math.floor(s%3600/60))+':'+jfPad(s%60)}
-setInterval(()=>{if($('pGameday').classList.contains('on'))gdTick()},1000);
+setInterval(()=>{if($('pGameday').classList.contains('on')||$('pKgd').classList.contains('on'))gdTick()},1000);
 function gdSay(){
   if(!GD||!GD.game)return 'I don\'t see an upcoming game.';
   const g=GD.game,us=nick(g.us.name),them=nick(g.them.name),st=new Date(g.start),d=daysUntil(st);
