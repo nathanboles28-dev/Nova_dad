@@ -706,7 +706,7 @@ body.chips2 #wxTm{display:none}body.chips2 #time{font-size:calc(14*var(--u))!imp
 .wr-u b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.wr-u>span:last-child{color:var(--dim);font-variant-numeric:tabular-nums}
 .wr-bar{height:calc(1.4*var(--u));border-radius:calc(1*var(--u));background:rgba(255,255,255,.1);overflow:hidden}.wr-bar i{display:block;height:100%;border-radius:calc(1*var(--u))}
 /* ===== Visual refresh: page accent colours, icons, glow and entrance animation ===== */
-#shift{--acc:#6ea8ff}#pLive{--acc:#ff5c6c}#pGames{--acc:#4d8bff;--ico:'🏒'}#pJelly{--acc:#b18cff;--ico:'🍿'}#pGameday{--acc:#4d8bff;--ico:'🍁'}
+#shift{--acc:#6ea8ff}#pLive{--acc:#ff5c6c}#pGameday.kn{--acc:#d4a017;--ico:'⚔️'}#pHomeCams{--acc:#7dd3fc;--ico:'🏠'}#pGames{--acc:#4d8bff;--ico:'🏒'}#pJelly{--acc:#b18cff;--ico:'🍿'}#pGameday{--acc:#4d8bff;--ico:'🍁'}
 #pLocal{--acc:#2fd3c0;--ico:'🚗'}#pFc{--acc:#5db7ff;--ico:'⛅'}#pNews{--acc:#ff9f43;--ico:'📰'}#pStand{--acc:#5fd88a;--ico:'📊'}
 #pComing{--acc:#ffd84a;--ico:'📅'}#pHub{--acc:#4d8bff;--ico:'🏒'}#pWS{--acc:#ffd84a;--ico:'⚾'}#pWrap{--acc:#ff5c8a;--ico:'🎬'}#pPhotos{--acc:#ffb84d}
 .page::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
@@ -1294,6 +1294,10 @@ body.morn #mini{opacity:0!important}
 .sat-tip b{display:block;font-size:calc(2.4*var(--u));margin-bottom:calc(.6*var(--u))}.sat-tip span{font-size:calc(2.1*var(--u));color:var(--dim);line-height:1.45}
 .cam-card{padding:calc(1.4*var(--u));flex:1;min-height:0;display:flex;flex-direction:column}
 @media (orientation:landscape){.cam-wrap{display:grid!important;grid-template-columns:1.55fr 1fr;grid-template-rows:1fr 1fr}.cam-wrap>.cam-card:first-child{grid-row:1/3}.cam-wrap>.cam-card{min-width:0}}
+#hcBody{position:absolute;left:5%;right:5%;top:calc(11*var(--u));bottom:calc(4*var(--u));display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:calc(1.6*var(--u))}
+@media (orientation:landscape){#hcBody{grid-template-columns:repeat(3,1fr)}}
+.hc-cam{position:relative;overflow:hidden;border-radius:calc(2*var(--u));background:#000;min-height:0}.hc-cam iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
+.hc-cam b{position:absolute;left:calc(1.2*var(--u));bottom:calc(1.2*var(--u));z-index:2;background:rgba(10,14,24,.75);padding:calc(.5*var(--u)) calc(1.3*var(--u));border-radius:calc(1.2*var(--u));font-size:calc(2*var(--u));font-weight:600}
 .cam-frame{position:relative;flex:1;min-height:0;border-radius:calc(1.6*var(--u));overflow:hidden;background:#000}
 .cam-frame iframe,.cam-frame img,.cam-frame>div{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
 .cam-off{display:grid;place-items:center;color:var(--dim);font-size:calc(2.4*var(--u))}
@@ -1433,6 +1437,30 @@ body.morn #mini{opacity:0!important}
  .nt-hero .nt-img{aspect-ratio:auto;height:45%;flex:none}
  .nt-hero .nt-text{flex:1;min-height:0;-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent);mask-image:linear-gradient(180deg,#000 72%,transparent)}#newsBody>.nt-list{flex:1 1 0!important;min-width:0;align-self:flex-start}
 }
+/* ===== Liquid glass (CFG.liquid): clearer glass with lit edges, a slight bend, soft colour glows behind ===== */
+html.liquid[data-theme="glass"] .card,html.liquid[data-theme="glass"] .gr,html.liquid[data-theme="glass"] .jf-glass{
+  border:1.5px solid transparent!important;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,0) 18%) padding-box,
+    linear-gradient(180deg,rgba(12,16,32,.22),rgba(12,16,32,.30)) padding-box,
+    linear-gradient(135deg,rgba(255,255,255,.62),rgba(255,255,255,.16) 20%,rgba(255,255,255,.05) 50%,rgba(255,255,255,.10) 70%,rgba(255,255,255,.42)) border-box!important;
+  box-shadow:inset 0 2px 1px -1px rgba(255,255,255,.35),inset 0 -2px 2px -1px rgba(0,0,0,.25),
+    inset 0 0 calc(3*var(--u)) rgba(255,255,255,.04),0 calc(1.8*var(--u)) calc(5*var(--u)) rgba(0,0,0,.35)!important;
+  backdrop-filter:url(#lgBend) blur(14px) saturate(170%)!important;-webkit-backdrop-filter:blur(14px) saturate(170%)!important;
+  border-radius:calc(3.4*var(--u))!important}
+html.liquid[data-theme="glass"] #clock{background:none!important;border:none!important;box-shadow:none!important;backdrop-filter:none!important}
+html.liquid[data-theme="glass"] :is(.chip-snow,.chip-bday,.chip-hol,.xb-gs,.cam-ev,.wz-tag,.wz-src,.mm-rc){
+  border:1px solid rgba(255,255,255,.45)!important;box-shadow:inset 0 1px 1px rgba(255,255,255,.4),0 calc(.5*var(--u)) calc(1.4*var(--u)) rgba(0,0,0,.25)!important}
+#lgOrbs{display:none}
+html.liquid #lgOrbs{display:block;position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;mix-blend-mode:screen;opacity:.75}
+html.liquid #lgOrbs i{position:absolute;border-radius:50%;filter:blur(40px);opacity:.6;animation:lgf 40s ease-in-out infinite alternate}
+html.liquid #lgOrbs i:nth-child(1){width:55vmax;height:55vmax;left:-18vmax;top:-12vmax;background:radial-gradient(circle,#3b82f6 0 40%,transparent 70%)}
+html.liquid #lgOrbs i:nth-child(2){width:45vmax;height:45vmax;right:-15vmax;top:22%;background:radial-gradient(circle,#ec4899 0 40%,transparent 70%);animation-duration:48s}
+html.liquid #lgOrbs i:nth-child(3){width:50vmax;height:50vmax;left:5%;bottom:-18vmax;background:radial-gradient(circle,#14b8a6 0 40%,transparent 70%);animation-duration:54s}
+html.liquid #lgOrbs i:nth-child(4){width:30vmax;height:30vmax;left:40%;top:38%;background:radial-gradient(circle,#f59e0b 0 35%,transparent 70%);opacity:.4;animation-duration:60s}
+@keyframes lgf{to{transform:translate(7vmax,5vmax) scale(1.1)}}
+html.liquid[data-theme="glass"] #bg{opacity:.8}
+
 </style>
 </head>
 <body>
@@ -1495,6 +1523,7 @@ body.morn #mini{opacity:0!important}
 <section id="pTech" class="page"><div id="tsBody"></div></section>
 <section id="pMorn" class="page"><div id="mmBody"></div></section>
 <section id="pXbox" class="page"><div class="jf-title">Xbox</div><div id="xbBody"></div></section>
+<section id="pHomeCams" class="page"><div class="jf-title">Home cameras</div><div id="hcBody" class="hc-grid"></div></section>
 <section id="pTx" class="page"><div class="jf-title">Trades &amp; signings</div><div id="txBody"></div></section>
 <section id="pNP" class="page"><div class="np-bg" id="npBg"></div><div id="npBody"></div></section>
 <div id="npMini"></div>
@@ -1515,6 +1544,7 @@ const CFG={
   clock24:false,
   // Colour theme: 'glass' (dark, frosted glass over your blurred photos), 'aurora' (blue, purple, pink), 'dusk' (warm amber and rose), 'graphite' (neutral dark), 'forest' (green), 'midnight' (the original blue and violet)
   theme:'glass',
+  liquid:true,   // liquid glass look for the 'glass' theme (clearer glass, lit edges, colour glows behind). false = the classic frosted glass
   // Background for the glass theme: 'cycle' (lava-lamp glow that slowly moves through all the colours below),
   // or one fixed colour: 'midnight' (deep navy), 'graphite' (charcoal), 'ocean' (deep teal), 'plum' (dark purple), or 'photo' (blurred photos from your folder)
   background:'cycle',
@@ -1541,13 +1571,15 @@ const CFG={
     {type:'week',      secs:45},   // Sunday evening + Monday morning only
     {type:'local',     secs:40},
     {type:'maps',      secs:60},   // weather maps: rain radar loop, then the satellite loop (half the time each)
+    {type:'homecams',  secs:30},   // his home cameras (needs the camera helper on this Mac: nova-cams-setup.sh)
     {type:'cams',      secs:40},
     {type:'news',      secs:40},   // news: your teams + CBC London, a featured story to read + more headlines
     {type:'tx',        secs:35},   // trades & signings: Leafs and Jays first, last 30 days
     // sports (game day / live / World Series only show when they're on)
     {type:'recap',     secs:40},   // morning after a Leafs/Knights game, until noon
     {type:'ws',        secs:30},
-    {type:'gameday',   secs:40},
+    {type:'gameday',   secs:40},   // Leafs game day
+    {type:'kgameday',  secs:40},   // Knights game day
     {type:'live',      secs:60},
     {type:'hub',       secs:40},
     {type:'khub',      secs:40},   // Knights hub (OHL season)
@@ -1596,6 +1628,9 @@ const CFG={
   jellyfin:{on:false, jumpWhenPlaying:false, jumpSecs:0},
   // Game day board: shows only on days your team plays, until puck drop (team = NHL abbreviation).
   gameday:{on:true, team:'TOR'},
+  kgameday:{on:true, team:'LDN'},
+  // ★ Home cameras: the names for camera 1, 2, 3... in the order of the recorder's channels. Leave a name '' to skip that camera.
+  homeCams:{on:true, names:['Camera 1','Camera 2','Camera 3','Camera 4','Camera 5','Camera 6']},   // Knights game day: matchup, records, last meeting, top scorers, goalies
   // Live game page: while one of your teams is playing. secs = time on the live page; otherSecs = time on every other page during the game.
   // mlbTeamId: your MLB team's number (Blue Jays = 141).
   live:{on:true, secs:60, otherSecs:10, mlbTeamId:141, replaySecs:180},   // replaySecs: how long a new goal replay plays on the live page
@@ -1656,9 +1691,9 @@ const CFG={
   // Xbox page (relay secret XBL_KEY from xbl.io). jumpSecs: when you start playing, show the page this many seconds (0 = off)
   xbox:{on:false, jumpSecs:0, mini:false},   // mini: the 'playing on Xbox' bar at the bottom of every page
   wazeMap:{on:true, reloadMin:15, views:[
-    {name:'London', sub:'Live traffic · Waze reports', lat:42.9750, lon:-81.2500, z:12},
-    {name:'Southdale · Wharncliffe to Wellington', lat:42.9440, lon:-81.2470, z:13, label:'bottom'},
-    {name:'401 to Woodstock', lat:43.0300, lon:-81.0000, z:10}
+    {name:'London → Hamilton', sub:'401 / 403 traffic · Waze reports', lat:43.2050, lon:-80.5600, z:9},
+    {name:'London', lat:42.9900, lon:-81.2500, z:11},
+    {name:'401 to Woodstock', lat:43.0300, lon:-81.0000, z:10, label:'bottom'}
   ]},
   // Live traffic map on the Around London page (TomTom, free key in the Worker as TOMTOM_KEY). Rests between quietFrom and quietTo o'clock to save the free allowance.
   // views: [big map, small map, small map]
@@ -1672,7 +1707,7 @@ const CFG={
   // (each card gets a different camera). You can still add a YouTube cam: {name:'...', yt:['c:CHANNEL_ID']}
   cams:{on:true, title:'Traffic cams', list:[   // Ontario 511 cameras: the closest camera on that road to near:[lat,lon]
     {name:'401 at Wellington Rd', near:[42.9196,-81.2275], road:'401'},
-    {name:'402 at the 401', near:[42.8985,-81.2985], road:'402'},
+    {name:'401 at 403 (Woodstock)', near:[43.1157,-80.6984], road:'401'},
     {name:'401 at Veterans Memorial', near:[42.9423,-81.1243], road:'401'}
   ]},
 
@@ -1707,6 +1742,8 @@ const SECRETS=(()=>{const out={calkey:'',topic:'',gmapkey:''};try{const h=new UR
   if(got)history.replaceState(null,'',location.pathname+location.search);
   Object.keys(out).forEach(k=>out[k]=localStorage.getItem('nova-'+k)||'')}catch(e){}return out})();
 document.documentElement.dataset.theme=CFG.theme||'dusk';
+if(CFG.liquid&&(CFG.theme||'')==='glass'){document.documentElement.classList.add('liquid');
+  document.body.insertAdjacentHTML('afterbegin','<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="lgBend" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.004 0.007" numOctaves="2" seed="7" result="n"/><feGaussianBlur in="n" stdDeviation="2" result="nb"/><feDisplacementMap in="SourceGraphic" in2="nb" scale="28" xChannelSelector="R" yChannelSelector="G"/></filter></svg><div id="lgOrbs"><i></i><i></i><i></i><i></i></div>')}
 const BGP={midnight:{b:['#16233f','#0a0f1d','#03050a'],c:['#1f4b9a','#3a2f7a','#14618c','#2b3f8f'],o:.6},
   ocean:{b:['#0d3a44','#071a20','#020607'],c:['#0f7a86','#1d4f8a','#0d6a5e','#14507a'],o:.58},
   plum:{b:['#33204a','#150d22','#05030a'],c:['#6b2fa0','#2f3f9a','#8a2f7a','#4a2f9a'],o:.56},
@@ -2177,10 +2214,10 @@ function renderGames(){
 setInterval(()=>{if($('pGames').classList.contains('on'))renderGames()},5000);
 
 /* ---------- Page rotation ---------- */
-const PAGE_EL={dashboard:'shift',photos:'pPhotos',games:'pGames',forecast:'pFc',news:'pNews',standings:'pStand',coming:'pComing',jellyfin:'pJelly',gameday:'pGameday',local:'pLocal',live:'pLive',hub:'pHub',wrapped:'pWrap',ws:'pWS',recap:'pRecap',khub:'pKHub',week:'pWeek',sat:'pSat',rloop:'pRLoop',watch:'pWatch',tech:'pTech',morn:'pMorn',np:'pNP',tx:'pTx',xbox:'pXbox',maps:'pRLoop',aqua:'pAqua',car:'pCar',cams:'pCams',radar:'pRadar'};
+const PAGE_EL={dashboard:'shift',photos:'pPhotos',games:'pGames',forecast:'pFc',news:'pNews',standings:'pStand',coming:'pComing',jellyfin:'pJelly',gameday:'pGameday',kgameday:'pGameday',homecams:'pHomeCams',local:'pLocal',live:'pLive',hub:'pHub',wrapped:'pWrap',ws:'pWS',recap:'pRecap',khub:'pKHub',week:'pWeek',sat:'pSat',rloop:'pRLoop',watch:'pWatch',tech:'pTech',morn:'pMorn',np:'pNP',tx:'pTx',xbox:'pXbox',maps:'pRLoop',aqua:'pAqua',car:'pCar',cams:'pCams',radar:'pRadar'};
 let paused=false;
 let pIdx=-1,pTimer;
-const canShow=p=>!!PAGE_EL[p.type]&&!(['local','cams','photos'].includes(p.type)&&!(CFG.relay&&SECRETS.calkey))&&(p.type!=='tx'||(typeof txOn==='function'&&txOn()))&&(p.type!=='xbox'||(typeof xbOn==='function'&&xbOn()))&&(p.type!=='np'||(typeof npOn==='function'&&npOn()&&NPC().page!==false))&&(p.type!=='photos'||photosOn())&&(p.type!=='jellyfin'||jfOn())&&(p.type!=='gameday'||gdToday())&&(p.type!=='local'||locOn())&&(p.type!=='live'||liveOn())&&(p.type!=='hub'||hubOn())&&(p.type!=='ws'||wsShow())&&(p.type!=='recap'||recapOn())&&(p.type!=='khub'||khOn())&&(p.type!=='week'||weekOn())&&(p.type!=='radar'||rdOn())&&(p.type!=='sat'||(CFG.satellite&&CFG.satellite.on!==false))&&(p.type!=='rloop'||!(CFG.radarLoop&&CFG.radarLoop.on===false))&&(p.type!=='maps'||!(CFG.radarLoop&&CFG.radarLoop.on===false)||(CFG.satellite&&CFG.satellite.on!==false))&&(p.type!=='cams'||(CFG.cams&&CFG.cams.on!==false&&camsList().length>0))&&(p.type!=='watch'||wtOn())&&(p.type!=='tech'||tsOn())&&(p.type!=='wrapped'||(jfOn()&&!(CFG.wrapped&&CFG.wrapped.on===false)&&new Date().getDate()<=((CFG.wrapped&&CFG.wrapped.days)||7)));
+const canShow=p=>!!PAGE_EL[p.type]&&!(['local','cams','photos'].includes(p.type)&&!(CFG.relay&&SECRETS.calkey))&&(p.type!=='tx'||(typeof txOn==='function'&&txOn()))&&(p.type!=='xbox'||(typeof xbOn==='function'&&xbOn()))&&(p.type!=='np'||(typeof npOn==='function'&&npOn()&&NPC().page!==false))&&(p.type!=='photos'||photosOn())&&(p.type!=='jellyfin'||jfOn())&&(p.type!=='gameday'||gdToday())&&(p.type!=='kgameday'||kgdToday())&&(p.type!=='homecams'||hcOK)&&(p.type!=='local'||locOn())&&(p.type!=='live'||liveOn())&&(p.type!=='hub'||hubOn())&&(p.type!=='ws'||wsShow())&&(p.type!=='recap'||recapOn())&&(p.type!=='khub'||khOn())&&(p.type!=='week'||weekOn())&&(p.type!=='radar'||rdOn())&&(p.type!=='sat'||(CFG.satellite&&CFG.satellite.on!==false))&&(p.type!=='rloop'||!(CFG.radarLoop&&CFG.radarLoop.on===false))&&(p.type!=='maps'||!(CFG.radarLoop&&CFG.radarLoop.on===false)||(CFG.satellite&&CFG.satellite.on!==false))&&(p.type!=='cams'||(CFG.cams&&CFG.cams.on!==false&&camsList().length>0))&&(p.type!=='watch'||wtOn())&&(p.type!=='tech'||tsOn())&&(p.type!=='wrapped'||(jfOn()&&!(CFG.wrapped&&CFG.wrapped.on===false)&&new Date().getDate()<=((CFG.wrapped&&CFG.wrapped.days)||7)));
 const goals={};const r_key=(L,g)=>L.label+g.id;
 function goalAlert(key,team,mine){
   const G=CFG.goalAlert||{};if(G.on===false)return;
@@ -2206,7 +2243,9 @@ function nextPage(force,hold){
   if(p.type==='standings'){stView=0;renderStandings();clearTimeout(window._stT);window._stT=setTimeout(()=>{if($('pStand').classList.contains('on')){stView=1;renderStandings()}},Math.max(4000,(p.secs||15)*500))}
   if(p.type==='coming')renderComing();
   if(p.type==='jellyfin'){renderJelly();loadJelly()}
-  if(p.type==='gameday'){renderGameday();loadGameday()}
+  if(p.type==='gameday'){window._gdK=false;$('pGameday').classList.remove('kn');renderGameday();loadGameday()}
+  if(p.type==='kgameday'){window._gdK=true;$('pGameday').classList.add('kn');gdSig='';renderGameday();loadKGD()}
+  if(p.type==='homecams')hcShow();else hcHide();
   if(p.type==='local'){renderLocal();loadLocal();if(Date.now()-drvAt>290000)loadDrives()}
   if(p.type==='live'){if(!force)lvPick++;renderLive2();loadLive()}
   if(p.type==='ws'){renderWS();loadWS()}
@@ -3013,10 +3052,25 @@ const gdLogo=(u,ab)=>u&&/^https?:\/\//i.test(u)?`<img class="gd-lg" src="${esc(u
 /* player photo in a circle. MLB cut-outs sit at the bottom of the circle; if one is missing, fall back to the regular headshot, framed wider */
 const gdHead=(u,cls='')=>{if(!(u&&/^https?:\/\//i.test(u)))return `<div class="gd-hs ${cls}"></div>`;const mlb=/mlbstatic\.com/.test(u);
   return `<div class="gd-hs ${cls}${mlb?' mlb':''}"><img src="${esc(u)}" alt="" onerror="if(this.src.includes('/headshot/silo/')){this.src=this.src.replace('/headshot/silo/','/headshot/67/');this.parentNode.classList.add('port')}else this.remove()"></div>`};
+/* ===== Home cameras: live views from the helper on this Mac (go2rtc). Streams only play while the page is up. ===== */
+let hcOK=false;const HCU='http://127.0.0.1:1984';
+async function hcCheck(){const C=CFG.homeCams||{};if(C.on===false){hcOK=false;return}
+  try{const j=await (await tfetch(HCU+'/api/streams',4000)).json();hcOK=Object.keys(j||{}).some(k=>/^cam\d+$/.test(k))}catch(e){hcOK=false}}
+setTimeout(hcCheck,3000);setInterval(hcCheck,5*60000);
+function hcShow(){const b=$('hcBody'),N=((CFG.homeCams||{}).names||[]);b.innerHTML=N.map((n,i)=>n?`<div class="hc-cam"><iframe src="${HCU}/stream.html?src=cam${i+1}&mode=webrtc,mse" allow="autoplay" tabindex="-1"></iframe><b>${esc(n)}</b></div>`:'').join('')}
+function hcHide(){const b=$('hcBody');if(b&&b.innerHTML)b.innerHTML=''}
+/* Knights (OHL) game day from the relay, shown on the same page as the Leafs one */
+let KGD=null,kgdAt=0;const GDX=()=>window._gdK?KGD:GD;
+async function loadKGD(){const C=CFG.kgameday||{};if(C.on===false||!CFG.relay)return;if(KGD&&Date.now()-kgdAt<9*60000)return;
+  const L=(CFG.leagues||[]).find(x=>x.type==='hockeytech'&&x.code==='ohl')||{};
+  for(const key of (L.keys||[])){try{const d=await (await tfetch(relayBase()+'/kgameday?team='+(C.team||'LDN')+'&ht='+encodeURIComponent(key),25000)).json();if(!d.error){KGD=d;kgdAt=Date.now();break}}catch(e){console.warn('kgameday',e)}}
+  if(window._gdK&&$('pGameday').classList.contains('on'))renderGameday()}
+const kgdToday=()=>{if(!KGD||!KGD.game)return false;const s=new Date(KGD.game.start);return s.toDateString()===new Date().toDateString()&&Date.now()<s.getTime()+10*60000};
+setTimeout(loadKGD,14000);setInterval(loadKGD,10*60000);
 function renderGameday(){
   const b=$('gdBody');
-  if(!GD||!GD.game){b.innerHTML='<div class="jf-wait">No game scheduled</div>';gdSig='';return}
-  const g=GD.game,U=GD.us||{},T=GD.them||{},us=nick(g.us.name),them=nick(g.them.name);
+  if(!GDX()||!GDX().game){b.innerHTML='<div class="jf-wait">No game scheduled</div>';gdSig='';return}
+  const g=GDX().game,U=GDX().us||{},T=GDX().them||{},us=nick(g.us.name),them=nick(g.them.name);
   const st=new Date(g.start);
   const row=(label,a,c,hi)=>{if(a==null||c==null)return '';const tot=(+a)+(+c)||1,aw=hi==='low'?(+a)<(+c):(+a)>(+c),cw=hi==='low'?(+c)<(+a):(+c)>(+a);
     return `<div class="gd-r"><span class="${aw?'w':''}">${esc(a)}${label.pct?'%':''}</span><div class="gd-mid"><small>${label.t}</small><div class="gd-bar"><i class="a" style="width:${(a/tot*100).toFixed(1)}%"></i><i class="b" style="width:${(c/tot*100).toFixed(1)}%"></i></div></div><span class="${cw?'w':''}">${esc(c)}${label.pct?'%':''}</span></div>`};
@@ -3024,7 +3078,7 @@ function renderGameday(){
   const team=(X,name)=>`<div class="jf-glass gd-card"><h2>${esc(name)}${X.l10?' · last 10: '+esc(X.l10):''}</h2>${X.form&&X.form.length?`<div class="gd-form">${form(X.form)}</div>`:''}
     ${X.goalies&&X.goalies.length?`<div class="gd-sub">GOALIES</div>${X.goalies.map(p=>`<div class="gd-p gd-gk">${gdHead(p.img)}<div><b>${esc(p.name)}</b><small>${esc(p.rec)}${p.sv?' · '+esc(p.sv):''}${p.gaa?' · '+esc(p.gaa)+' GAA':''}</small></div></div>`).join('')}`:''}
     ${X.scorers&&X.scorers.length?`<div class="gd-sub">TOP SCORERS</div>${X.scorers.map(p=>`<div class="gd-p gd-sc">${gdHead(p.img)}<div><b>${esc(p.name)}</b><small>${esc(p.p)} PTS · ${esc(p.g)}G ${esc(p.a)}A</small></div></div>`).join('')}`:''}</div>`;
-  const L=GD.last,S=GD.series||{};
+  const L=GDX().last,S=GDX().series||{};
   const lead=S.played?(S.us>S.them?`${us} lead series ${S.us}–${S.them}`:S.us<S.them?`${them} lead series ${S.them}–${S.us}`:`Series tied ${S.us}–${S.them}`):'';
   const lastTxt=L?`Last meeting <b>${new Date(L.date).toLocaleDateString([],{month:'short',day:'numeric'})}</b> · ${L.res==='W'?esc(us):esc(them)} <b>${Math.max(L.us,L.them)}–${Math.min(L.us,L.them)}</b>${L.res==='OT'?' (OT)':''}`:'First meeting this season';
   const html=`<div class="jf-title">Game day</div>
@@ -3051,7 +3105,7 @@ function renderGameday(){
 function fitGameday(){const b=document.querySelector('#gdBody .gd-body');if(!b)return;const over=()=>b.scrollHeight>b.clientHeight+2;
   const drop=sel=>{const cards=b.querySelectorAll('.gd-two .gd-card');let did=false;cards.forEach(c=>{const x=c.querySelectorAll(sel);if(x.length>1){x[x.length-1].remove();did=true}});return did};
   if(over())drop('.gd-sc');if(over()){const r=b.querySelector('.gd-streak');if(r)r.remove()}if(over())drop('.gd-gk');}
-function gdTick(){const el=$('gdCd');if(!el||!GD||!GD.game)return;const ms=new Date(GD.game.start)-Date.now();
+function gdTick(){const el=$('gdCd');if(!el||!GDX()||!GDX().game)return;const ms=new Date(GDX().game.start)-Date.now();
   if(ms<=0){el.textContent='Puck drop!';return}const s=Math.floor(ms/1000);el.textContent=Math.floor(s/3600)+':'+jfPad(Math.floor(s%3600/60))+':'+jfPad(s%60)}
 setInterval(()=>{if($('pGameday').classList.contains('on'))gdTick()},1000);
 function gdSay(){
@@ -5053,7 +5107,7 @@ function radarSay(){const P=(PL&&PL.planes)||[];if(!P.length)return 'No planes o
 /* Keep pixels moving to avoid burn-in */
 setInterval(()=>{const x=(Math.random()*2-1)*.8,y=(Math.random()*2-1)*.8;document.querySelectorAll('.page').forEach(el=>el.style.transform=`translate(${x}vw,${y}vh)`)},300000);
 
-document.getElementById('ver').textContent='build nova 104';
+document.getElementById('ver').textContent='build nova 105';
 /* ---------- Glass theme background: a softly blurred photo from your folder, changes every few minutes ---------- */
 let bgOn=0,bgFails=0;
 function bgCycle(){
