@@ -1008,7 +1008,7 @@ body[data-hol="halloween"] #dots i.on,body[data-hol="halloween"] #dots .on{backg
 .sat-card{padding:calc(1.6*var(--u));flex:1;min-height:0;display:flex;flex-direction:column}
 .sat-stage{position:relative;flex:1;min-height:0;border-radius:calc(1.8*var(--u));overflow:hidden;background:#000}
 .sat-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;z-index:0;will-change:opacity;backface-visibility:hidden;transform:translateZ(0)}
-.sat-img.on{opacity:1}.sat-img.under{z-index:1;opacity:1}.sat-img.top{z-index:2}.sat-img.fade{animation:satIn 1.2s ease-in-out both}
+.sat-img{object-position:67% 34%}.sat-img.on{opacity:1}.sat-img.under{z-index:1;opacity:1}.sat-img.top{z-index:2}.sat-img.fade{animation:satIn 1.2s ease-in-out both}
 @keyframes satIn{from{opacity:0}to{opacity:1}}
 /* ===== Aquarium ===== */
 #pAqua{background:#031c2e;transition:opacity 1.6s ease,visibility 1.6s}#aqCv{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -2381,7 +2381,7 @@ function renderStandings(){
   const v=x=>x===undefined||x===null||x===''?'–':esc(x);
   const table=(title,rows,fav,logoOf,cut,max)=>rows.length?`<div class="card stcard"><h2>${title}</h2>
     <div class="str hd"><i>#</i><span></span><b>TEAM</b><span>GP</span><span>W</span><span>L</span><span>OTL</span><em>PTS</em></div>
-    ${rows.slice(0,max).map((r,i)=>`<div class="str${fav.includes(r.c)?' me':''}${i+1===cut?' cut':''}"><i>${i+1}</i>${logoImg(logoOf(r))||'<span style="height:calc(4.6*var(--u))"></span>'}<b>${esc(r.name||r.c)}</b><span>${v(r.gp)}</span><span>${v(r.w)}</span><span>${v(r.l)}</span><span>${v(r.otl)}</span><em>${v(r.pts)}</em></div>`).join('')}</div>`:'';
+    ${rows.slice(0,max).map((r,i)=>`<div class="str${fav.includes(r.c)?' me':''}${i+1===cut?' cut':''}"><i>${i+1}</i>${logoImg(logoOf(r))||'<span style="height:calc(4.6*var(--u))"></span>'}<b>${esc(/^OHL/.test(title)?String(r.name||r.c).split(' ').pop():(r.name||r.c))}</b><span>${v(r.gp)}</span><span>${v(r.w)}</span><span>${v(r.l)}</span><span>${v(r.otl)}</span><em>${v(r.pts)}</em></div>`).join('')}</div>`:'';
   const race=()=>{if(!stNHL.length||!stMet.length)return '';const fav=(nhlL&&nhlL.fav)||[];
     const row=(r,lab,cls='')=>`<div class="str${fav.includes(r.c)?' me':''}${cls}"><i>${lab}</i>${logoImg(r.logo)||'<span></span>'}<b>${esc(r.name||r.c)}</b><span>${v(r.gp)}</span><span>${v(r.w)}</span><span>${v(r.l)}</span><span>${v(r.otl)}</span><em>${v(r.pts)}</em></div>`;
     const wc=[...stNHL.slice(3),...stMet.slice(3)].sort((a,b)=>b.pts-a.pts||a.gp-b.gp);
@@ -2389,7 +2389,7 @@ function renderStandings(){
       <div class="str hd"><i></i><span></span><b>TEAM</b><span>GP</span><span>W</span><span>L</span><span>OTL</span><em>PTS</em></div>
       <div class="ssec">Atlantic</div>${stNHL.slice(0,3).map((r,i)=>row(r,'A'+(i+1))).join('')}
       <div class="ssec">Metropolitan</div>${stMet.slice(0,3).map((r,i)=>row(r,'M'+(i+1))).join('')}
-      <div class="ssec">Wild card</div>${wc.slice(0,2).map((r,i)=>row(r,'WC'+(i+1),i===1?' cut':'')).join('')}${wc.slice(2,5).map(r=>row(r,'')).join('')}</div>`};
+      ${matchMedia('(orientation:landscape)').matches?`</div><div class="card stcard"><h2>NHL · Wild card race</h2><div class="str hd"><i></i><span></span><b>TEAM</b><span>GP</span><span>W</span><span>L</span><span>OTL</span><em>PTS</em></div>`:''}<div class="ssec">Wild card</div>${wc.slice(0,2).map((r,i)=>row(r,'WC'+(i+1),i===1?' cut':'')).join('')}${wc.slice(2,matchMedia('(orientation:landscape)').matches?7:5).map(r=>row(r,'')).join('')}</div>`};
   const nhlCard=stView&&race()?race():table('NHL · Atlantic Division',stNHL,(nhlL&&nhlL.fav)||[],r=>r.logo,3,8);
   const html=nhlCard+(stView&&race()?'':table('OHL · Western Conference',stOHL,(ohlL&&ohlL.fav)||[],r=>ohlLogo[r.c]||'',8,matchMedia('(orientation:landscape)').matches?8:10));
   $('standBody').innerHTML=html||'<div class="gnone">Standings unavailable right now</div>';
