@@ -110,6 +110,7 @@ h1{font-size:30px;font-weight:700;letter-spacing:-.02em}
     <button data-c="wake up"><span>☀️</span><b>Wake</b></button>
     <button id="noteBtn"><span>📌</span><b>Leave a note</b></button>
     <button data-c="clear notes"><span>🧽</span><b>Clear notes</b></button>
+    <button id="flBtn"><span>✈️</span><b>Add flight</b></button>
   </div>
   <div class="row">
     <button data-c="back">‹ Back</button>
@@ -139,6 +140,7 @@ function send(text){
 document.querySelectorAll('[data-c]').forEach(b=>b.addEventListener('click',()=>{unlockSpeech();send(b.dataset.c)}));
 /* a short note that stays on the main page (e.g. "Dinner Sunday at 5") */
 $('noteBtn').addEventListener('click',()=>{const v=(prompt('Note for the screen (it stays on the main page for a week)')||'').trim();if(v)send('note: '+v)});
+$('flBtn').addEventListener('click',()=>{const n=(prompt('Flight number (e.g. AC 1234)')||'').trim();if(!n)return;const d=(prompt('Date of the flight (e.g. Dec 20)')||'').trim();if(d)send('flight '+n+' '+d)});
 $('sayX').addEventListener('click',()=>{clearTimeout(window._sayT);$('sayCard').style.display='none';if(window.speechSynthesis)speechSynthesis.cancel()});
 function setConn(ok,msg){$('conn').className='pill '+(ok?'ok':'bad');$('conn').querySelector('span').textContent=msg||(ok?'Connected':'Offline')}
 

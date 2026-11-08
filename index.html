@@ -674,6 +674,15 @@ body.hasAlert #mini{top:calc(9.5*var(--u))}
 .chip-bin{background:rgba(90,200,120,.25);border:1px solid rgba(120,220,150,.6)}.chip-bin.now{background:rgba(255,190,60,.3);border-color:rgba(255,200,90,.7)}
 .chip-note{background:rgba(255,226,120,.24);border:1px solid rgba(255,226,120,.6);white-space:normal!important;text-align:left}
 .chip-tip{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3)}
+.chip-fl{display:inline-block;font-weight:700;font-size:calc(2.3*var(--u));padding:calc(.5*var(--u)) calc(1.6*var(--u));border-radius:calc(2*var(--u));background:rgba(120,180,255,.24);border:1px solid rgba(150,200,255,.6)}.chip-fl.bad{background:rgba(255,120,90,.28);border-color:rgba(255,150,120,.7)}
+#pFlights{--acc:#8ec5ff;--ico:'✈️'}
+#flBody{position:absolute;left:5%;right:5%;top:calc(11*var(--u));bottom:calc(5*var(--u));display:flex;flex-direction:column;gap:calc(1.8*var(--u))}
+.fl-card{padding:calc(2.4*var(--u))!important}.fl-top{display:flex;align-items:center;gap:calc(1.4*var(--u));font-size:calc(2.1*var(--u));color:var(--dim)}.fl-top b{color:#fff;font-size:calc(2.4*var(--u))}
+.fl-st{margin-left:auto;font-weight:800;font-size:calc(2*var(--u));padding:calc(.4*var(--u)) calc(1.4*var(--u));border-radius:calc(1.4*var(--u));background:rgba(90,200,120,.3)}.fl-st.bad{background:rgba(255,100,80,.35)}.fl-st.mid{background:rgba(255,190,60,.3)}.fl-st.dim{background:rgba(255,255,255,.12)}
+.fl-route{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin-top:calc(1.6*var(--u))}.fl-ap b{display:block;font-size:calc(5.2*var(--u));font-weight:700;line-height:1}.fl-ap span{display:block;font-size:calc(2*var(--u));color:var(--dim);margin-top:calc(.4*var(--u))}
+.fl-ap em{display:block;font-style:normal;font-size:calc(2.8*var(--u));font-weight:600;margin-top:calc(.8*var(--u))}.fl-ap small{display:block;font-size:calc(1.8*var(--u));color:var(--dim);margin-top:calc(.3*var(--u))}.fl-ap.r{text-align:right}.fl-ap s{color:var(--dim);font-size:.7em;margin-right:.4em}
+.fl-mid{font-size:calc(4*var(--u));opacity:.7;padding:0 calc(2*var(--u))}.fl-foot{margin-top:calc(1.4*var(--u));font-size:calc(2*var(--u));color:var(--dim)}.fl-foot b{color:#fff}
+@media (orientation:landscape){#flBody{display:grid;grid-template-columns:1fr 1fr;align-content:start}}
 .chip-bin,.chip-note,.chip-tip{display:inline-block;font-weight:700;font-size:calc(2.3*var(--u));padding:calc(.5*var(--u)) calc(1.6*var(--u));border-radius:calc(2*var(--u))}
 .chip-tip{margin-top:calc(1*var(--u));font-size:calc(1.9*var(--u))}
 #clock .chips{display:flex;flex-wrap:wrap;gap:calc(.9*var(--u));margin-top:calc(1*var(--u))}#clock .chips>*{margin:0!important}#clock .chip-note{flex-basis:100%;box-sizing:border-box}
@@ -1481,7 +1490,7 @@ html.liquid[data-theme="glass"] #bg{opacity:.8}
 <g stroke="#07040c" stroke-width="3"><path d="M540 214H690"/><path d="M548 214V176M566 214V176M584 214V176M602 214V176M620 214V176M638 214V176M656 214V176M674 214V176"/><path d="M540 186H690"/></g></g></svg>
 <div class="hw-fog"></div><div class="hw-fog b"></div></div><canvas id="holfx"></canvas><div class="xlights"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 <main id="shift" class="page on">
- <section id="clock" class="card"><div id="time"></div><div id="date"></div><div id="holChip" class="chip-hol" style="display:none"></div><div class="chips"><div id="bdayChip" class="chip-bday" style="display:none"></div><div id="binChip" class="chip-bin" style="display:none"></div><div id="yardChip" class="chip-bin" style="display:none"></div><div id="noteChip" class="chip-note" style="display:none"></div></div></section>
+ <section id="clock" class="card"><div id="time"></div><div id="date"></div><div id="holChip" class="chip-hol" style="display:none"></div><div class="chips"><div id="bdayChip" class="chip-bday" style="display:none"></div><div id="binChip" class="chip-bin" style="display:none"></div><div id="yardChip" class="chip-bin" style="display:none"></div><div id="noteChip" class="chip-note" style="display:none"></div><div id="flChip" class="chip-fl" style="display:none"></div></div></section>
  <section id="wx" class="card"><div id="wxicon">⛅</div><div><div id="temp">--°</div><div id="wxdesc">Loading…</div><div id="wxsub"></div><div id="wxTm"></div><div id="snowChip" class="chip-snow" style="display:none"></div><div id="tipChip" class="chip-tip" style="display:none"></div></div><div class="map" id="radar"></div></section>
  <section id="fc" class="card"><h2>Next 5 days</h2><div class="days"></div></section>
  <section id="spot" class="card"><div class="sp-wait">✨ Loading something interesting…</div></section>
@@ -1524,6 +1533,7 @@ html.liquid[data-theme="glass"] #bg{opacity:.8}
 <section id="pMorn" class="page"><div id="mmBody"></div></section>
 <section id="pXbox" class="page"><div class="jf-title">Xbox</div><div id="xbBody"></div></section>
 <section id="pHomeCams" class="page"><div class="jf-title">Home cameras</div><div id="hcBody" class="hc-grid"></div></section>
+<section id="pFlights" class="page"><div class="jf-title">Flights</div><div id="flBody"></div></section>
 <section id="pTx" class="page"><div class="jf-title">Trades &amp; signings</div><div id="txBody"></div></section>
 <section id="pNP" class="page"><div class="np-bg" id="npBg"></div><div id="npBody"></div></section>
 <div id="npMini"></div>
@@ -1574,6 +1584,7 @@ const CFG={
     {type:'maps',      secs:60},   // weather maps: rain radar loop, then the satellite loop (half the time each)
     {type:'homecams',  secs:30},   // his home cameras (needs the camera helper on this Mac: nova-cams-setup.sh)
     {type:'cams',      secs:40},
+    {type:'flights',   secs:25},   // his upcoming flights (shows when one is within 3 weeks)
     {type:'news',      secs:40},   // news: your teams + CBC London, a featured story to read + more headlines
     {type:'tx',        secs:35},   // trades & signings: Leafs and Jays first, last 30 days
     // sports (game day / live / World Series only show when they're on)
@@ -1630,6 +1641,9 @@ const CFG={
   // Game day board: shows only on days your team plays, until puck drop (team = NHL abbreviation).
   gameday:{on:true, team:'TOR'},
   kgameday:{on:true, team:'LDN'},
+  // Flights: picked up from calendar events with "flight" and a flight number in them (e.g. "Flight to Calgary (AC 123)"),
+  // or added on the remote ("Add flight"). home = his airports, shown first when a trip has more than one leg.
+  flights:{on:true, home:['YXU','YYZ','YHM'], showDays:21},
   // ★ Home cameras: the names for camera 1, 2, 3... in the order of the recorder's channels. Leave a name '' to skip that camera.
   homeCams:{on:true, names:['Camera 1','','Camera 3','Camera 4','Camera 5','Camera 6','','']},   // Knights game day: matchup, records, last meeting, top scorers, goalies
   // Live game page: while one of your teams is playing. secs = time on the live page; otherSecs = time on every other page during the game.
@@ -2215,10 +2229,10 @@ function renderGames(){
 setInterval(()=>{if($('pGames').classList.contains('on'))renderGames()},5000);
 
 /* ---------- Page rotation ---------- */
-const PAGE_EL={dashboard:'shift',photos:'pPhotos',games:'pGames',forecast:'pFc',news:'pNews',standings:'pStand',coming:'pComing',jellyfin:'pJelly',gameday:'pGameday',kgameday:'pKgd',homecams:'pHomeCams',local:'pLocal',live:'pLive',hub:'pHub',wrapped:'pWrap',ws:'pWS',recap:'pRecap',khub:'pKHub',week:'pWeek',sat:'pSat',rloop:'pRLoop',watch:'pWatch',tech:'pTech',morn:'pMorn',np:'pNP',tx:'pTx',xbox:'pXbox',maps:'pRLoop',aqua:'pAqua',car:'pCar',cams:'pCams',radar:'pRadar'};
+const PAGE_EL={dashboard:'shift',photos:'pPhotos',games:'pGames',forecast:'pFc',news:'pNews',standings:'pStand',coming:'pComing',jellyfin:'pJelly',gameday:'pGameday',kgameday:'pKgd',homecams:'pHomeCams',flights:'pFlights',local:'pLocal',live:'pLive',hub:'pHub',wrapped:'pWrap',ws:'pWS',recap:'pRecap',khub:'pKHub',week:'pWeek',sat:'pSat',rloop:'pRLoop',watch:'pWatch',tech:'pTech',morn:'pMorn',np:'pNP',tx:'pTx',xbox:'pXbox',maps:'pRLoop',aqua:'pAqua',car:'pCar',cams:'pCams',radar:'pRadar'};
 let paused=false;
 let pIdx=-1,pTimer;
-const canShow=p=>!!PAGE_EL[p.type]&&!(['local','cams','photos'].includes(p.type)&&!(CFG.relay&&SECRETS.calkey))&&(p.type!=='tx'||(typeof txOn==='function'&&txOn()))&&(p.type!=='xbox'||(typeof xbOn==='function'&&xbOn()))&&(p.type!=='np'||(typeof npOn==='function'&&npOn()&&NPC().page!==false))&&(p.type!=='photos'||photosOn())&&(p.type!=='jellyfin'||jfOn())&&(p.type!=='gameday'||gdToday())&&(p.type!=='kgameday'||kgdToday())&&(p.type!=='homecams'||hcOK)&&(p.type!=='local'||locOn())&&(p.type!=='live'||liveOn())&&(p.type!=='hub'||hubOn())&&(p.type!=='ws'||wsShow())&&(p.type!=='recap'||recapOn())&&(p.type!=='khub'||khOn())&&(p.type!=='week'||weekOn())&&(p.type!=='radar'||rdOn())&&(p.type!=='sat'||(CFG.satellite&&CFG.satellite.on!==false))&&(p.type!=='rloop'||!(CFG.radarLoop&&CFG.radarLoop.on===false))&&(p.type!=='maps'||!(CFG.radarLoop&&CFG.radarLoop.on===false)||(CFG.satellite&&CFG.satellite.on!==false))&&(p.type!=='cams'||(CFG.cams&&CFG.cams.on!==false&&camsList().length>0))&&(p.type!=='watch'||wtOn())&&(p.type!=='tech'||tsOn())&&(p.type!=='wrapped'||(jfOn()&&!(CFG.wrapped&&CFG.wrapped.on===false)&&new Date().getDate()<=((CFG.wrapped&&CFG.wrapped.days)||7)));
+const canShow=p=>!!PAGE_EL[p.type]&&!(['local','cams','photos'].includes(p.type)&&!(CFG.relay&&SECRETS.calkey))&&(p.type!=='tx'||(typeof txOn==='function'&&txOn()))&&(p.type!=='xbox'||(typeof xbOn==='function'&&xbOn()))&&(p.type!=='np'||(typeof npOn==='function'&&npOn()&&NPC().page!==false))&&(p.type!=='photos'||photosOn())&&(p.type!=='jellyfin'||jfOn())&&(p.type!=='gameday'||gdToday())&&(p.type!=='kgameday'||kgdToday())&&(p.type!=='homecams'||hcOK)&&(p.type!=='flights'||flSoon().length>0)&&(p.type!=='local'||locOn())&&(p.type!=='live'||liveOn())&&(p.type!=='hub'||hubOn())&&(p.type!=='ws'||wsShow())&&(p.type!=='recap'||recapOn())&&(p.type!=='khub'||khOn())&&(p.type!=='week'||weekOn())&&(p.type!=='radar'||rdOn())&&(p.type!=='sat'||(CFG.satellite&&CFG.satellite.on!==false))&&(p.type!=='rloop'||!(CFG.radarLoop&&CFG.radarLoop.on===false))&&(p.type!=='maps'||!(CFG.radarLoop&&CFG.radarLoop.on===false)||(CFG.satellite&&CFG.satellite.on!==false))&&(p.type!=='cams'||(CFG.cams&&CFG.cams.on!==false&&camsList().length>0))&&(p.type!=='watch'||wtOn())&&(p.type!=='tech'||tsOn())&&(p.type!=='wrapped'||(jfOn()&&!(CFG.wrapped&&CFG.wrapped.on===false)&&new Date().getDate()<=((CFG.wrapped&&CFG.wrapped.days)||7)));
 const goals={};const r_key=(L,g)=>L.label+g.id;
 function goalAlert(key,team,mine){
   const G=CFG.goalAlert||{};if(G.on===false)return;
@@ -2247,6 +2261,7 @@ function nextPage(force,hold){
   if(p.type==='gameday'){window._gdK=false;renderGameday();loadGameday()}
   if(p.type==='kgameday'){window._gdK=true;gdSig='';renderGameday();loadKGD()}
   if(p.type==='homecams')hcShow();else hcHide();
+  if(p.type==='flights')renderFlights();
   if(p.type==='local'){renderLocal();loadLocal();if(Date.now()-drvAt>290000)loadDrives()}
   if(p.type==='live'){if(!force)lvPick++;renderLive2();loadLive()}
   if(p.type==='ws'){renderWS();loadWS()}
@@ -2836,6 +2851,13 @@ function handleCommand(raw){
   const has=re=>re.test(t);
   const nm=String(raw||'').match(/^\s*(?:note|message|reminder)\s*[:\-]\s*(.+)$/i);if(nm){addNote(nm[1].trim());showFor('dashboard');return reply('Note added to the screen.')}
   if(/^(clear|delete|remove|erase)( the| all)? (notes?|messages?)$/.test(t)){clearNotes();return reply('Notes cleared.')}
+  {const fm=String(raw||'').match(/^\s*(add |remove |delete )?flight\s+([A-Za-z0-9]{2}\s?\d{1,4})\s*(?:on\s+)?(.*)$/i);if(fm){const no=flNo(fm[2]);
+    if(/remove|delete/i.test(fm[1]||'')){FLM=FLM.filter(f=>f.no!==no);try{localStorage.setItem('nova-flights',JSON.stringify(FLM))}catch(e){}flChip();return reply('Flight '+no+' removed.')}
+    let d=new Date((fm[3]||'').replace(/(\d)(st|nd|rd|th)\b/,'$1')+' '+new Date().getFullYear());if(/^\d{4}-\d{2}-\d{2}$/.test((fm[3]||'').trim()))d=new Date(fm[3].trim()+'T12:00');
+    if(isNaN(d))return reply('Say the date too, like: flight AC 1234 Dec 20');if(d<new Date(Date.now()-2*864e5))d.setFullYear(d.getFullYear()+1);
+    FLM=FLM.filter(f=>!(f.no===no&&f.date===flYmd(d))).concat({no,date:flYmd(d)});try{localStorage.setItem('nova-flights',JSON.stringify(FLM))}catch(e){}loadFlights();
+    return reply('Added flight '+no+' on '+d.toLocaleDateString([],{weekday:'short',month:'short',day:'numeric'})+'.')}}
+  if(/^(clear|delete|remove)( the| all)? flights$/.test(t)){FLM=[];try{localStorage.setItem('nova-flights','[]')}catch(e){}flChip();return reply('Flights cleared.')}
   if(has(/\b(unpause|resume|continue|carry on|keep going|start rotating)\b/)){paused=false;nextPage();return reply('Okay, back to rotating.')}
   if(has(/\b(pause|stop|stay|hold|freeze|don'?t move)\b/)){paused=true;clearTimeout(pTimer);return reply('Okay, I\'ll stay on this page.')}
   if(/^(close|hide|dismiss|done|ok|okay|never ?mind|thanks|thank you)( it| that| this| status| the status)?$/.test(t)){hideOverlays();return reply('Okay.')}
@@ -3616,6 +3638,49 @@ function fitSun(){const s=$('sun'),d=$('dayl'),m=s.querySelector('.moonrow');if(
 setInterval(fitSun,30000);addEventListener('resize',()=>setTimeout(fitSun,300));
 
 /* ================= Reminders on the main page: garbage day + notes left from the remote ================= */
+/* ===== Flights: from his calendar (events with "flight" + a flight number) and from the remote ("flight AC 1234 Dec 20") ===== */
+let FLM=[];try{FLM=JSON.parse(localStorage.getItem('nova-flights')||'[]')}catch(e){}
+const FLS={};
+const flYmd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const flNo=s=>{const m=String(s||'').toUpperCase().match(/\b([A-Z]{2}|[A-Z]\d|\d[A-Z])\s?(\d{1,4})\b/);return m?m[1]+m[2]:''};
+function flList(){const C=CFG.flights||{};if(C.on===false)return [];const out=[],seen=new Set(),today=flYmd(new Date(Date.now()-864e5));
+  (calEvents||[]).forEach(e=>{const tx=(e.title||'')+' '+(e.loc||'');if(!/\bflight\b|✈/i.test(tx))return;const no=flNo(tx.replace(/\bflight\b/ig,''));if(!no)return;
+    const d=flYmd(e.start);if(d>=today&&!seen.has(no+d)){seen.add(no+d);out.push({no,date:d,title:e.title,start:e.start})}});
+  FLM.forEach(f=>{if(f.date>=today&&!seen.has(f.no+f.date)){seen.add(f.no+f.date);out.push({no:f.no,date:f.date,start:new Date(f.date+'T12:00')})}});
+  return out.sort((a,b)=>a.date.localeCompare(b.date))}
+const flSoon=()=>{const d=(CFG.flights||{}).showDays||21;return flList().filter(f=>(new Date(f.date+'T23:59')-Date.now())<d*864e5)};
+/* the leg that matters: the one leaving one of his airports, else the first */
+function flLeg(f){const s=FLS[f.no+'|'+f.date];if(!s||!s.legs||!s.legs.length)return null;const H=(CFG.flights||{}).home||[];return s.legs.find(l=>l.dep&&H.includes(l.dep.iata))||s.legs[0]}
+async function loadFlights(){if(!CFG.relay||!SECRETS.calkey)return;
+  for(const f of flSoon()){const k=f.no+'|'+f.date,s=FLS[k],l0=s&&flLeg(f),hrs=(new Date((l0&&l0.dep&&(l0.dep.est||l0.dep.sched))||f.date+'T12:00')-Date.now())/36e5,every=hrs>72?24*36e5:hrs>8?3*36e5:20*6e4;
+    if(s&&Date.now()-s.at<every)continue;
+    const l=s&&flLeg(f);if(l&&/landed|arrived|cancel/i.test(l.status)&&Date.now()-s.at<6*36e5)continue;
+    try{const j=await (await tfetch(relayBase()+`/flight?key=${encodeURIComponent(SECRETS.calkey)}&no=${f.no}&date=${f.date}`,15000)).json();if(!j.error){j.at=Date.now();FLS[k]=j}}catch(e){console.warn('flight',e)}}
+  flChip();if($('pFlights').classList.contains('on'))renderFlights()}
+setTimeout(loadFlights,12000);setInterval(loadFlights,10*6e4);
+const flT=iso=>iso?new Date(iso).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}):'';
+function flState(l){const st=String(l.status||''),late=l.dep&&l.dep.sched&&l.dep.est?Math.round((new Date(l.dep.est)-new Date(l.dep.sched))/6e4):0;
+  if(/cancel/i.test(st))return {t:'Cancelled',c:'bad'};if(/divert/i.test(st))return {t:'Diverted',c:'bad'};
+  if(/landed|arrived/i.test(st))return {t:'Landed',c:''};if(/enroute|departed|airborne/i.test(st))return {t:'In the air',c:''};
+  if(/boarding/i.test(st))return {t:'Boarding',c:'mid'};if(/gateclosed/i.test(st))return {t:'Gate closed',c:'mid'};
+  if(late>=15)return {t:`Delayed ${late} min`,c:'bad'};if(/delay/i.test(st))return {t:'Delayed',c:'bad'};
+  if(/expected|scheduled|checkin|ontime/i.test(st))return {t:'On time',c:''};return {t:'Scheduled',c:'dim'}}
+function flWhen(f,l){const dep=l&&l.dep&&(l.dep.est||l.dep.sched),ms=dep?new Date(dep)-Date.now():new Date(f.date+'T12:00')-Date.now(),h=ms/36e5;
+  if(l&&/landed|arrived/i.test(l.status))return `Landed ${flT(l.arr.act||l.arr.est||l.arr.sched)}`;if(ms<0&&dep)return 'Departed';
+  if(h<1)return `Leaves in ${Math.max(1,Math.round(ms/6e4))} min`;if(h<24)return `Leaves in ${Math.floor(h)} h ${Math.round(h%1*60)} min`;const d=Math.round(h/24);return d===1?'Tomorrow':`In ${d} days`}
+function renderFlights(){const b=$('flBody'),L=flSoon().slice(0,4);
+  b.innerHTML=L.map(f=>{const l=flLeg(f),st=l?flState(l):{t:'Scheduled',c:'dim'},day=new Date(f.date+'T12:00').toLocaleDateString([],{weekday:'long',month:'short',day:'numeric'});
+    const ap=(x,r)=>x?`<div class="fl-ap${r?' r':''}"><b>${esc(x.iata||'')}</b><span>${esc(x.city||'')}</span><em>${x.est&&x.sched&&Math.abs(new Date(x.est)-new Date(x.sched))>=6e5?`<s>${flT(x.sched)}</s>${flT(x.est)}`:flT(x.sched)}</em><small>${[x.term?'Terminal '+esc(x.term):'',x.gate?'Gate '+esc(x.gate):'',r&&x.belt?'Bags: belt '+esc(x.belt):''].filter(Boolean).join(' · ')}</small></div>`:'<div class="fl-ap"></div>';
+    return `<div class="jf-glass fl-card"><div class="fl-top">✈️ <b>${esc(l&&l.airline?l.airline+' '+l.no.replace(/^\S+\s?/,''):f.no)}</b> · ${day}<span class="fl-st ${st.c}">${st.t}</span></div>
+      ${l?`<div class="fl-route">${ap(l.dep)}<div class="fl-mid">→</div>${ap(l.arr,1)}</div>`:`<div class="fl-foot">${esc(f.title||'')}</div>`}
+      <div class="fl-foot"><b>${flWhen(f,l)}</b>${l&&l.model?' · '+esc(l.model):''}</div></div>`}).join('')}
+/* under the clock: from 30 hours before until it lands */
+function flChip(){const el=$('flChip');if(!el)return;let txt='',bad=false;
+  for(const f of flSoon()){const l=flLeg(f),dep=l&&l.dep&&(l.dep.est||l.dep.sched);if(!dep)continue;const h=(new Date(dep)-Date.now())/36e5,arr=l.arr&&(l.arr.est||l.arr.sched);
+    if(h>30||(/landed|arrived/i.test(l.status)&&Date.now()-new Date(l.arr.act||arr)>3*36e5))continue;const st=flState(l);bad=st.c==='bad';
+    txt=`✈️ ${l.no} to ${l.arr.city||l.arr.iata} · ${st.t}${/landed|in the air/i.test(st.t)?'':' · '+flT(l.dep.est||l.dep.sched)}${l.dep.gate&&h<4?' · Gate '+l.dep.gate:''}`;break}
+  el.style.display=txt?'':'none';el.className='chip-fl'+(bad?' bad':'');el.textContent=txt;if(typeof chipFit==='function')chipFit()}
+setInterval(flChip,60000);
 function binCheck(){const el=$('binChip');if(!el)return;const R=CFG.recycling||{},k=recycleIn(),h=new Date().getHours(),nx=recycleNext()[0];
   if(k===1&&h>=(R.eveningFrom??16)){el.className='chip-bin';el.textContent='🗑️ Tomorrow: '+binWhat(nx)+' · put it out tonight';el.style.display=''}
   else if(k===0&&h<12){el.className='chip-bin now';el.textContent='🗑️ Today: '+binWhat(nx)+' · out by 7 AM';el.style.display=''}
@@ -4784,6 +4849,7 @@ function ntItems(){
   const out=[],tag=(t,c)=>`<span class="nt-k ${c||''}">${esc(t)}</span>`;
   try{const bd=backupDue();if(bd!=null)out.push(`${tag('💾 BACKUP','a')} <b>${esc(TC().backup)}</b> last backed up ${bd} days ago · tap Backed up on the remote when done`)}catch(e){}
   try{const R=CFG.recycling||{},k=recycleIn(),h=new Date().getHours();if(k===1&&h>=(R.eveningFrom??16))out.push(`${tag('🗑️ TOMORROW','k')} <b>${binWhat(recycleNext()[0])}</b> · put it out tonight or by 7 AM`);else if(k===0&&h<12)out.push(`${tag('🗑️ TODAY','k')} <b>${binWhat(recycleNext()[0])}</b>`)}catch(e){}
+  try{flSoon().forEach(f=>{const l=flLeg(f),dep=l&&l.dep&&(l.dep.est||l.dep.sched);if(dep&&(new Date(dep)-Date.now())<30*36e5&&new Date(dep)>Date.now()){const st=flState(l);out.push(`${tag('✈️ FLIGHT','a')} <b>${esc(l.no)} to ${esc(l.arr.city||l.arr.iata)}</b> · ${st.t} · ${flT(dep)}`)}})}catch(e){}
   try{notesLive().slice(-2).forEach(n=>out.push(`${tag('📌 NOTE','a')} <b>${esc(n.text)}</b>`))}catch(e){}
   /* your teams first: live, today, last result */
   try{lastRes.forEach(r=>r.games.forEach(g=>{if(!isFav(r.L,g))return;const d=g.date,today=d.toDateString()===new Date().toDateString();
